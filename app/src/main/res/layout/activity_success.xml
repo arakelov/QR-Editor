@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.karakelyan.QREditor.SuccessActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/textv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/success"
+        android:textSize="22sp"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgv"
+        android:contentDescription="@string/desc"/>
+
+    <Spinner
+        android:id="@+id/ecc"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </Spinner>
+
+            <Button
+                android:id="@+id/gen"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/err"
+                android:layout_marginBottom="5dp"
+                android:onClick="onClickChangeQR"/>
+
+            <Button
+                android:id="@+id/custom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cust"
+                android:onClick="onClickQR"/>
+
+</LinearLayout>
+</ScrollView>
+
+
+

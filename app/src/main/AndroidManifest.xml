@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.karakelyan.QREditor">
+    <!--android:versionName="1.0"
+    android:versionCode="1">
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="27"/>-->
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.karakelyan.QREditor.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.karakelyan.QREditor.VizitkaActivity" />
+        <activity android:name="com.karakelyan.QREditor.WiActivity" />
+        <activity
+            android:name="com.karakelyan.QREditor.SuccessActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.karakelyan.QREditor.TelefonActivity" />
+        <activity android:name="com.karakelyan.QREditor.SmsActivity" />
+        <activity android:name="com.karakelyan.QREditor.UrlActivity" />
+        <activity android:name="com.karakelyan.QREditor.TextActivity" />
+        <activity
+            android:name="com.karakelyan.QREditor.CustomizeActivity"
+            android:screenOrientation="portrait"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.karakelyan.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
+
+    </application>
+
+</manifest>
