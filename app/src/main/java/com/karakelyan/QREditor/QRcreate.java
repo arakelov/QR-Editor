@@ -13,19 +13,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by А on 20.11.2017.
+ * Created by Аrakelov Vsevolod on 20.11.2017.
+ * This class represents a QR code bitmap object which will used in Customize and Success activities
  */
 
 public final class QRcreate {
 
-
+    //Finding of the width of device for future picture
     public static final int WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels;
     public static final int HEIGHT = WIDTH;
+    //ident from borders which is represent width of silent area
     public static int count;
 
 
 
-
+        //method according with input parameters(color of QR code, color of contrast silent area, correction level and text for coding)
+        //will create and return a bitmap of generated QR code
         public Bitmap qrBitmap(int front, int back, int lvl, String... params) {
 
             Map<EncodeHintType, Object> hints = new HashMap<>();
@@ -60,7 +63,7 @@ public final class QRcreate {
         }
 
 
-
+    //this method is for converting bitmap matrix from method above to bitmap
     private Bitmap matrixToBitmap(int front, int back, BitMatrix matrix) {
         int width = matrix.getWidth();
         int height = matrix.getHeight();

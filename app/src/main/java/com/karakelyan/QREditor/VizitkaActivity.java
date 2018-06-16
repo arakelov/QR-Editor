@@ -40,7 +40,8 @@ public class VizitkaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vizitka);
         init();
-
+        //definition if application has permission for reading contacts, then will start method [pickContact()]
+        //if not will start method for asking user to grant permission to read contacts
         addCont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +57,7 @@ public class VizitkaActivity extends AppCompatActivity {
         });
         
     }
+
     public void init(){
         edName = findViewById(R.id.name);
         edComp = findViewById(R.id.org);
@@ -72,13 +74,13 @@ public class VizitkaActivity extends AppCompatActivity {
     }
 
 
-
+    //open contacts to choose one
     public void pickContact(){
         Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         startActivityForResult(contactPickerIntent, REQUEST_CODE_READ_CONTACTS);
     }
 
-
+    //this function is checking if permission on reading contacts is granted, if yes returns true if not returns false
     private boolean hasPermission()
     {
         int res;
@@ -94,6 +96,7 @@ public class VizitkaActivity extends AppCompatActivity {
         return true;
     }
 
+    //function for sending request to grant permission
     private void requestPerms()
     {
         String[] permissions = new String[]{Manifest.permission.READ_CONTACTS};
@@ -102,6 +105,7 @@ public class VizitkaActivity extends AppCompatActivity {
             requestPermissions(permissions, PERMISSION_CODE_READ_CONTACTS);
         }
     }
+
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]grantResults )
     {
@@ -149,6 +153,9 @@ public class VizitkaActivity extends AppCompatActivity {
             requestPerms();
         }
     }
+
+    /*starts after choosing a contact, gets name of contact and phone number from
+    data table of the chosen contact by cursor object and puts values into EditText areas*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
@@ -190,7 +197,8 @@ public class VizitkaActivity extends AppCompatActivity {
                         break;
                     }}}
 
-
+    /*this method build a string variable according with data putted into
+    TextEdit areas and sending it to SuccessActivity by Intent object*/
     public void onClickQR(View view)
     {
         String s;

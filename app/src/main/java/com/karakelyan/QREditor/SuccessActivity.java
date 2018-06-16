@@ -15,10 +15,19 @@ import android.widget.Spinner;
 public class SuccessActivity extends AppCompatActivity {
 
 
-
+    //square for placing QR code bitmap
     ImageView imageView;
+
+    //massive of values for spinner
     String[] ecc ={"Level L(7%)","Level M(15%)","Level Q(25%)","Level H(30%)"};
+
+    //variable for selected value from spinner
     String s_item;
+
+    //default values for creating QR code bitmap(color of QR, silent area color, correction level)
+    public int FRONT = 0xFF000000;
+    public int BACK = 0xFFFFFFFF;
+    public int LEVEL = 15;
 
 
     @Override
@@ -26,6 +35,7 @@ public class SuccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
         imageView= findViewById(R.id.imgv);
+        //creating of the QR code bitmap and applying it in the ImageView
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
@@ -33,6 +43,7 @@ public class SuccessActivity extends AppCompatActivity {
             Bitmap bitmap=new QRcreate().qrBitmap(FRONT, BACK, LEVEL, s);
             imageView.setImageBitmap(bitmap);
         }
+        //spinner below is for changing an error correction level
         Spinner spinner=findViewById(R.id.ecc);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ecc);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -53,10 +64,10 @@ public class SuccessActivity extends AppCompatActivity {
             }
         };
         spinner.setOnItemSelectedListener(itemSelectedListener);
-//-----------------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------------
 
     }
+
+    //function for recreation of the QR according chosen correction level, called by clicking button "change error correction level"
     public void onClickChangeQR(View v) {
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -86,9 +97,7 @@ public class SuccessActivity extends AppCompatActivity {
         }
     }
     //-----------------------------------------------------------------------------------------------------------------------------------------
-    public int FRONT = 0xFF000000;
-    public int BACK = 0xFFFFFFFF;
-    public int LEVEL = 15;
+
 
 }
 

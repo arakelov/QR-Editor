@@ -70,12 +70,6 @@ public class MainActivity extends AppCompatActivity {
             }
             break;
 
-           /* case R.id.cv:
-            {
-                Intent intent = new Intent(this, CeventActivity.class);
-                startActivity(intent);
-            }
-            break;*/
         }
     }
 }

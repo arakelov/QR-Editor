@@ -39,25 +39,45 @@ import static android.graphics.Bitmap.createScaledBitmap;
 
 
 public class CustomizeActivity extends AppCompatActivity {
+    //massive of the layers
     public  Drawable[] layers;
+    //square for placing a bitmap of the QR code
     ImageView imageView;
+    //button for choosing first color of the gradient
     Button btn;
+    //button for choosing second color of the gradient
     Button btn1;
+    //button which will apply chosen colors in gradient
     Button btn2;
+    //button for taking picture from gallery
     Button photobtn;
+    //button for choosing color of the QR code
     Button frontcl;
+    //button for choosing colore of the silent area
     Button backcl;
+    //button for saving picture
     Button btnSave;
+    //button for sending picture
     Button btnShare;
+    //Layer which has bottom position
     public Drawable firstLayer;
+    //Layer which has top position and presents a QR code
     public Bitmap qrLayer;
+    //variable for ARGB color value which is present color of QR code
     public int FRONT = 0x00FFFFFF;
+    //variable for ARGB color value which is present color of QR code silent area
     public int BACK = 0xFFFFFFFF;
+    //variable for ARGB color value which is present first color of gradient
     public int START=0xFF000000;
+    //variable for ARGB color value which is present second color of gradient
     public int END=0xFF000000;
+    //variable which is content text to coding into QR code
     public String s;
+    //variable which is contains an id of correction level
     public int lvl;
+    //variable which is contains an id for request permission to write memory
     private static final int REQUEST_PERMISSION_WRITE = 11;
+    //variable which is contains an id for request permission to read memory
     private static final int REQUEST_PERMISSION_READ=0;
 
     @Override
@@ -65,6 +85,7 @@ public class CustomizeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customize);
         imageView=findViewById(R.id.imgv);
+        //on the start of activity set a gradient background with black color
         setGrad();
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -74,8 +95,10 @@ public class CustomizeActivity extends AppCompatActivity {
             qrLayer=new QRcreate().qrBitmap(FRONT, BACK, lvl, s);
             createImage();
         }
-        btn=findViewById(R.id.startcl);
 
+
+        btn=findViewById(R.id.startcl);
+        //open dialog for choosing first color for gradient
         btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -116,7 +139,7 @@ public class CustomizeActivity extends AppCompatActivity {
         });
         //--------------------------------------------------------------------------------------------------
         btn1=findViewById(R.id.endcl);
-
+        //open a dialog for choosing second color for gradient
         btn1.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -155,12 +178,13 @@ public class CustomizeActivity extends AppCompatActivity {
 
             }
         });
-        //-----------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------
+        //this is defenition for button which will call methods for creating gradient according with chosen colors and unite layers as one object
         btn2=findViewById(R.id.refr);
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            setGrad();
+                        setGrad();
                         FRONT = 0x00FFFFFF;
                         qrLayer=new QRcreate().qrBitmap(FRONT, BACK, lvl, s);
                             createImage();
@@ -169,11 +193,8 @@ public class CustomizeActivity extends AppCompatActivity {
 
         //--------------------------------------------------------------------------------------------------
 
-
-
-        //-------------------------------------------------------------------------------------------------
+        //open a dialog for choosing color of QR code
         frontcl=findViewById(R.id.frontcl);
-
         frontcl.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -212,8 +233,8 @@ public class CustomizeActivity extends AppCompatActivity {
             }
         });
         //-------------------------------------------------------------------------------------------------
+        //open a dialog for choosing color of silent area
         backcl=findViewById(R.id.backcl);
-
         backcl.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -251,6 +272,7 @@ public class CustomizeActivity extends AppCompatActivity {
 
             }
         });
+
         //-----------------------------------------------------------------------------------------------------------
         btnSave=findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -278,18 +300,25 @@ public class CustomizeActivity extends AppCompatActivity {
         });
     }
 
+    //this method according with chosen color for background of layer which is contain QR code,
+    // recreate QR code bitmap with new parameters and unite new created layer with another
     private void changeFrontColor(int selectedColor) {
         FRONT = selectedColor;
         qrLayer=new QRcreate().qrBitmap(FRONT, BACK, lvl, s);
         createImage();
-
     }
+
+    //this method according with chosen color for background of layer which is contain QR code,
+    // recreate QR code bitmap with new parameters and unite new created layer with another
     private void changeBackgroundColor(int selectedColor) {
         BACK = selectedColor;
         qrLayer=new QRcreate().qrBitmap(FRONT, BACK, lvl, s);
         createImage();
-
     }
+
+    //this method checking if app has permission to read files from memory of the device,
+    //if yes it will call method [photoPick()] for choosing picture from gallery.
+    //if not it will call method for asking an user to grant this permission
     public void photoPickInit()
     {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -303,6 +332,9 @@ public class CustomizeActivity extends AppCompatActivity {
         }
     }
 
+    //this method checking if app has permission to save files in memory of the device,
+    //if yes it will call method [photoSave()] for saving picture.
+    //if not it will call method for asking an user to grant this permission
     public void photoSaveInit()
     {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -316,6 +348,9 @@ public class CustomizeActivity extends AppCompatActivity {
         }
     }
 
+    //this method checking if app has permission to save files in memory of the device,
+    //if yes it will call method [photoShare()] for sharing picture.
+    //if not it will call method for asking an user to grant this permission
     public void photoShareInit(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED){
@@ -328,6 +363,7 @@ public class CustomizeActivity extends AppCompatActivity {
         }
     }
 
+    //this method is calling Intent object to choose photo from gallery
     public void photoPick()
     {
         Intent photoIntent = new Intent(Intent.ACTION_PICK);
@@ -354,12 +390,10 @@ public class CustomizeActivity extends AppCompatActivity {
         }
     }
 
+
     private void requestForReadPermission(){
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            // Provide an additional rationale to the user if the permission was not granted
-            // and the user would benefit from additional context for the use of the permission.
-            // Display a SnackBar with a button to request the missing permission.
             Toast.makeText(this, "Memory access required to choose photo from gallery.",
                     Toast.LENGTH_SHORT).show();
                     ActivityCompat.requestPermissions(this,
@@ -367,14 +401,14 @@ public class CustomizeActivity extends AppCompatActivity {
                 }
 
          else {
-            Toast.makeText(this,
-                    "Permission is not available.",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Permission is not available.", Toast.LENGTH_SHORT).show();
             // Request the permission. The result will be received in onRequestPermissionResult().
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_READ);
         }
     }
 
+    //this method define algorithm after choosing a photo by user.
+    //converting bitmap to drawable object as layer and calling method [createImage()] to unite layers as one object
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -413,7 +447,7 @@ public class CustomizeActivity extends AppCompatActivity {
         imageView.setImageDrawable(layerDrawable);
     }
 
-
+    //this method changing color of the first gradient button and text on it according with chosen color
     private void gradInitSt(int clst){
         START=clst;
         int R=(clst>>16)&0xFF;
@@ -424,7 +458,7 @@ public class CustomizeActivity extends AppCompatActivity {
         clst=(A & 0xff)<< 24 | (B & 0xff) << 16 | (R & 0xff) << 8 | (G & 0xff);
         btn.setTextColor(clst);
     }
-
+    //this method changing color of the second gradient button and text on it according with chosen color
     private void gradInitEn(int clen){
         END=clen;
         int R=(clen>>16)&0xFF;
@@ -512,7 +546,7 @@ public class CustomizeActivity extends AppCompatActivity {
         return  (Environment.MEDIA_MOUNTED.equals(state) ||
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
     }
-
+    //cheking results for request permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
         switch (requestCode){

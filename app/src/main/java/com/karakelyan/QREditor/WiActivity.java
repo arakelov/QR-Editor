@@ -13,13 +13,14 @@ import android.widget.Toast;
 
 public class WiActivity extends AppCompatActivity {
 
+    //massive of the string values which represents types of WiFi encryption
     String[] nettype ={"No encryption", "WEP", "WPA/WPA2"};
     String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wi);
-
+        //spinner bellow is for choosing type of encryption of the WiFi connection
         Spinner spinner = findViewById(R.id.nettype);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, nettype);
